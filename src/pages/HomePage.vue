@@ -29,12 +29,25 @@
     </section>
   </section>
 </template>
-
+<!-- Terraria goes hard -->
 <script>
 import Gift from '../components/Gift.vue';
+import Pop from '../utils/Pop.js';
+import { giftsService } from "../services/GiftsService.js"
+
 export default {
-  name: "Home",
-  components: { Gift }
+  setup() {
+    async function getGifts() {
+      try {
+        await giftsService.getGifts()
+      } catch (error) {
+        logger.error('[Getting Gifts]', error)
+        console.error("[Getting Gifts]", error)
+        Pop.error(error)
+      }
+    }
+    getGifts()
+  }
 }
 </script>
 
