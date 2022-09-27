@@ -3,11 +3,19 @@
     <section class="row">
       <div class="col-3 bg-info">
         <!-- form separate here -->
-        <h4 class="mt-3">TAG</h4>
-        <input type="text" class="bg-dark text-light">
-        <h4 class="mt-3">URL</h4>
-        <input type="text" class="bg-dark text-light">
-        <button class="ms-2 btn btn-dark">Submit</button>
+        <form @submit.prevent="">
+          <div class="input-group">
+            <h4 class="mt-3">TAG</h4>
+            <input type="text" class="bg-dark text-light">
+          </div>
+          <div class="input-group">
+            <h4 class="mt-3">URL</h4>
+            <input type="text" class="bg-dark text-light">
+          </div>
+          <div class="input-group">
+            <button class="ms-2 btn btn-dark">Submit</button>
+          </div>
+        </form>
         <div class="border border-dark mt-5 pm-disable"></div>
         <!-- search gif separate here -->
         <h4 class="mt-4">Search Gifs</h4>
@@ -16,14 +24,7 @@
       <div class="col-9">
         <!-- show gifts here -->
         <div class="row p-3">
-          <Gift />
-          <Gift />
-          <Gift />
-          <Gift />
-          <Gift />
-          <Gift />
-          <Gift />
-          <Gift />
+          <Gift v-for="g in gifts" :gift="g" />
         </div>
       </div>
     </section>
@@ -34,6 +35,8 @@
 import Gift from '../components/Gift.vue';
 import Pop from '../utils/Pop.js';
 import { giftsService } from "../services/GiftsService.js"
+import { AppState } from "../AppState.js"
+import { computed } from "@vue/reactivity"
 
 export default {
   setup() {
@@ -47,6 +50,9 @@ export default {
       }
     }
     getGifts()
+    return {
+      gifts: computed(() => AppState.gifts)
+    }
   }
 }
 </script>
