@@ -2,12 +2,12 @@
   <form @submit.prevent="handleSubmit">
     <h4 class="my-3">TAG</h4>
     <div class="form-floating mb-3">
-      <input type="tag" class="form-control" id="tag" name="tag" v-model="editable.tag" required="true" placeholder="name@example.com">
+      <input type="tag" class="form-control" id="tag" name="tag" v-model="formValues.tag" required="true">
       <label for="tag">Tag</label>
     </div>
     <h4 class="my-3">URL</h4>
     <div class="form-floating mb-3">
-      <input type="url" class="form-control" id="url" name="url" v-model="editable.url" required="true" placeholder="Image Url">
+      <input type="url" class="form-control" id="url" name="url" v-model="formValues.url" required="true">
       <label for="url">Image Url</label>
     </div>
     <div class="d-flex justify-content-end">
@@ -18,22 +18,21 @@
 
 
 <script>
+import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
+import { AppState } from '../AppState.js';
 import { giftsService } from '../services/GiftsService.js';
 
 export default {
   setup(){
-    const editable = ref({})
     return {
-      editable,
+      formValues: computed(()=> AppState.formValues),
       async handleSubmit() {
         try {
-          console.log(editable.value)
-          await giftsService.addGift(editable.value)
+          console.log(this.formValues)
+          await giftsService.addGift(this.formValues)
         } catch (error) {
-          logger.error("[Handling Submit]", error);
           console.error("[Handling Submit]", error);
-          Pop.error(error);
         }
       }
     }

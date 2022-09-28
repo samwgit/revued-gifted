@@ -7,5 +7,11 @@ export const AppState = reactive({
   account: {},
 
   /**@type {import('./models/Gift.js').Gift[]} */
-  gifts: []
+  gifts: [],
+  
+  /**@type {import('./models/Gift.js').Gift[]} */
+  giphys: [],
+  
+  /**@type {import('./models/FormValues.js').FormValues} */
+  formValues: {tag: '', url: ''}
 })

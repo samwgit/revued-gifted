@@ -1,21 +1,21 @@
 <template>
-  <section class="container-fluid">
-    <section class="row">
+  <div class="container-fluid">
+    <div class="row">
       <div class="col-3 bg-info">
-        <!-- form separate here -->
         <GiftForm />
         <div class="border border-dark mt-5 pm-disable"></div>
-        <!-- search gif separate here -->
         <GiphyForm />
+        <div class="mt-2 row">
+          <Giphys v-for="g in giphys" :giphy="g" />
+        </div>
       </div>
       <div class="col-9">
-        <!-- show gifts here -->
         <div class="row p-3">
           <Gift v-for="g in gifts" :gift="g" />
         </div>
       </div>
-    </section>
-  </section>
+    </div>
+  </div>
 </template>
 <!-- Terraria goes hard -->
 <script>
@@ -26,25 +26,25 @@ import { AppState } from "../AppState.js"
 import { computed } from "@vue/reactivity"
 import GiftForm from '../components/GiftForm.vue';
 import GiphyForm from '../components/GiphyForm.vue';
+import Giphys from '../components/Giphys.vue';
 
 export default {
     setup() {
         async function getGifts() {
             try {
-                await giftsService.getGifts();
+              await giftsService.getGifts();
             }
             catch (error) {
-                logger.error("[Getting Gifts]", error);
-                console.error("[Getting Gifts]", error);
-                Pop.error(error);
+              console.error("[Getting Gifts]", error);
             }
         }
         getGifts();
         return {
-            gifts: computed(() => AppState.gifts)
+          gifts: computed(() => AppState.gifts),
+          giphys: computed(()=> AppState.giphys)
         };
     },
-    components: { GiftForm, GiphyForm }
+    components: { GiftForm, GiphyForm, Giphys }
 }
 </script>
 

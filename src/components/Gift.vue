@@ -31,9 +31,7 @@ export default {
           console.log(id);
           const res = await giftsService.showGift(id)
         } catch (error) {
-          logger.error('[Getting Gifts]', error)
           console.error("[Getting Gifts]", error)
-          Pop.error(error)
         }
       }
     }

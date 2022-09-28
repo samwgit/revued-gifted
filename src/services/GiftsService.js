@@ -1,13 +1,13 @@
 import { giftApi, giphyApi } from "../services/AxiosService.js"
 import { AppState } from "../AppState.js"
 import { Gift } from "../models/Gift.js";
+import { Giphy } from "../models/Giphy.js";
 class GiftsService {
 
   async addGift(value) {
     const res= await giftApi.post('', value)
     console.log(res.data)
-    AppState.gifts.push(new Gift(res.data))
-    AppState.emit('gifts');
+    AppState.gifts = [new Gift(res.data), ...AppState.gifts]
   }
 
   async showGift(id) {
@@ -21,7 +21,6 @@ class GiftsService {
     const res = await giftApi.put(`/${id}`, gift);
     console.log(res.data, gift);
     gift.url = res.data.url;
-    AppState.emit('gifts');
   }
 
   async getGifts() {
@@ -32,16 +31,25 @@ class GiftsService {
   }
 
   async getGiphy(searchInput) {
+    AppState.giphys = []
     const res = await giphyApi.get(`/search`, {
       params: {
         api_key: 'jokHd9wM4ZUTak9KBRfIWnGddliGPg9S',
         limit: 20,
         offset: 0,
-        rating: 'pg-13',
+        rating: 'g',
         lang: 'en',
         q: searchInput
       }
     })
+    console.log(res.data.data)
+    let giphys =res.data.data.map(g => new Giphy(g)) 
+    console.log(giphys)
+    AppState.giphys = giphys
+  }
+
+  async fillForm(formData) {
+    AppState.formValues = formData
   }
 }
 

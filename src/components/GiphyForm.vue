@@ -1,19 +1,17 @@
 <template>
   <h4 class="mt-4">Search Gifs</h4>
-  <form @submit="">
+  <form @submit.prevent="handleSubmit">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-9">
-          <div class="d-flex mb-3">
-            <div class="form-floating mb-3 pm-disable">
-              <input type="text" class="form-control bg-dark text-light" id="search" name="search"
-                v-model="editable.search" required="true" placeholder="Search Giphy">
-              <label for="search">Search Giphy</label>
-            </div>
+        <div class="col-9 pm-disable d-flex flex-column justify-content-center align-items-stretch">
+          <div class="form-floating align-items-stretch">
+            <input type="text" class="form-control bg-dark text-light" id="search" name="search"
+              v-model="editable.search" required="true" placeholder="Search Giphy">
+            <label for="search">Search Giphy</label>
           </div>
         </div>
-        <div class="col-3">
-          <button type="submit" class="btn btn-dark pm-disable">Search</button>
+        <div class="col-3 pm-disable d-flex align-items-stretch">
+          <button type="submit" class="btn btn-outline-light">Search</button>
         </div>
       </div>
     </div>
@@ -36,9 +34,7 @@ export default {
           console.log(editable.value)
           await giftsService.getGiphy(editable.value)
         } catch (error) {
-          logger.error("[Handling Submit]", error);
           console.error("[Handling Submit]", error);
-          Pop.error(error);
         }
       }
     }
