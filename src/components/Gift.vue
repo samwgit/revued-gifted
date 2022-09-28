@@ -7,9 +7,9 @@
       </div>
     </div>
     <div v-else class="bg-closed p-4 d-flex justify-content-center align-items-center">
-      <div class="bg-light elevation-3 pt-3 pb-1 px-4 d-flex flex-column align-items-center" @click="show(gift.id)">
-        <h3 class="mb-2">{{gift.tag}}</h3>
-        <h6>Click to open!</h6>
+      <div class="bg-light elevation-3 pt-3 pb-1 px-4 d-flex flex-column align-items-center selectable" @click="show(gift.id)">
+        <h3 class="no-select mb-2">{{gift.tag}}</h3>
+        <h6 class="no-select">Click to open!</h6>
       </div>
     </div>
   </div>
@@ -28,8 +28,8 @@ export default {
     return {
       async show(id) {
         try {
-          console.log('Hello');
-          // const res = await giftsService.showGift(id)
+          console.log(id);
+          const res = await giftsService.showGift(id)
         } catch (error) {
           logger.error('[Getting Gifts]', error)
           console.error("[Getting Gifts]", error)

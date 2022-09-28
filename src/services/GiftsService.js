@@ -2,14 +2,23 @@ import { giftApi, giphyApi } from "../services/AxiosService.js"
 import { AppState } from "../AppState.js"
 import { Gift } from "../models/Gift.js";
 class GiftsService {
-  async showGift() {
+
+  async addGift(value) {
+    const res= await giftApi.post('', value)
+    console.log(res.data)
+    AppState.gifts.push(new Gift(res.data))
+    AppState.emit('gifts');
+  }
+
+  async showGift(id) {
     const gift = AppState.gifts.find((gif) => gif.id == id);
     if (!gift) {
       throw new Error('BAD ID');
     }
 
     gift.opened = true;
-    const res = await sandBoxServer.put(`/api/gifts/${id}`, gift);
+    console.log(gift)
+    const res = await giftApi.put(`/${id}`, gift);
     console.log(res.data, gift);
     gift.url = res.data.url;
     AppState.emit('gifts');
